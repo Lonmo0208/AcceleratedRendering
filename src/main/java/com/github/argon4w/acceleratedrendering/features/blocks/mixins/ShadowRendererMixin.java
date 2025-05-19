@@ -7,7 +7,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import net.caffeinemc.mods.sodium.client.render.SodiumWorldRenderer;
+//import net.caffeinemc.mods.sodium.client.render.SodiumWorldRenderer;
 import net.irisshaders.iris.mixin.LevelRendererAccessor;
 import net.irisshaders.iris.shadows.ShadowRenderer;
 import net.minecraft.client.Camera;
@@ -19,6 +19,7 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.BlockDestructionProgress;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.embeddedt.embeddium.impl.render.EmbeddiumWorldRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -77,7 +78,7 @@ public class ShadowRendererMixin {
         Long2ObjectMap<SortedSet<BlockDestructionProgress>> blockBreakingProgressions = ((LevelRendererAccessor)Minecraft.getInstance().levelRenderer).getDestructionProgress();
         MutableInt counter = new MutableInt(0);
 
-        SodiumWorldRenderer.instance().iterateVisibleBlockEntities(blockEntity -> {
+        EmbeddiumWorldRenderer.instance().forEachVisibleBlockEntity(blockEntity -> {
             if (lightsOnly && blockEntity.getBlockState().getLightEmission() == 0) {
                 return;
             }
